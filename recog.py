@@ -50,7 +50,7 @@ model = KNN(K=5)
 model.fit(X, Y)
 
 # Captura de vídeo
-cap = cv2.VideoCapture(1)
+cap = cv2.VideoCapture(0)
 classifier = cv2.CascadeClassifier("haarcascade_frontalface_default.xml")
 f_list = []
 
