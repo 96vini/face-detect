@@ -27,20 +27,17 @@ class KNN:
         return predictions
 
     def euc_dist(self, x1, x2):
-        x1 = np.array(x1, dtype=float)  # Converter para numpy array com tipo float
+        x1 = np.array(x1, dtype=float)
         try:
-            x2 = np.array(x2, dtype=float)  # Tentar converter para numpy array com tipo float
+            x2 = np.array(x2, dtype=float)
             return np.sqrt(np.sum((x1 - x2) ** 2))
         except ValueError:
-            # Se a conversão falhar, retornar um valor grande para indicar uma distância impossível
             return float('inf')
 
 
-# Leitura dos dados
 f_name = "face_data.csv"
 data = pd.read_csv(f_name).values
 
-# Partição dos dados
 X, Y = data[:, 1:-1], data[:, -1]
 
 # Knn função chamando com k = 5
