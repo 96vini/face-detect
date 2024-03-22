@@ -18,7 +18,6 @@ mp_drawing = mp.solutions.drawing_utils
 
 cap = cv2.VideoCapture(0)
 
-
 while True:
   ret, frames = cap.read()
   frames = cv2.flip(frames, 1)
