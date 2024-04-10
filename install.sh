@@ -1,4 +1,8 @@
-brew install cmake
+git clone git@github.com:pytorch/vision.git
+
+conda install -c conda-forge 'ffmpeg<4.3'
+
+python setup.py install
 
 git clone https://github.com/opencv/opencv.git
 git clone https://github.com/opencv/opencv_contrib.git

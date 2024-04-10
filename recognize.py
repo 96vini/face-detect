@@ -4,6 +4,7 @@ import pandas as pd
 import operator
 
 class KNN:
+
     def __init__(self, K=3):
         self.K = K
 
@@ -23,7 +24,10 @@ class KNN:
                 else:
                     neigh_count[self.Y_train[idx]] = 1
             sorted_neigh_count = sorted(neigh_count.items(), key=operator.itemgetter(1), reverse=True)
-            predictions.append(sorted_neigh_count[0][0])
+            if sorted_neigh_count[0][1] >= 5:
+                predictions.append(sorted_neigh_count[0][0])
+            else:
+                predictions.append("não identificado")
         return predictions
 
     def euc_dist(self, x1, x2):
@@ -34,8 +38,8 @@ class KNN:
         except ValueError:
             return float('inf')
 
-
 f_name = "face_data.csv"
+
 data = pd.read_csv(f_name).values
 
 X, Y = data[:, 1:-1], data[:, -1]
@@ -49,7 +53,6 @@ model.fit(X, Y)
 # Captura de vídeo
 cap = cv2.VideoCapture(0)
 classifier = cv2.CascadeClassifier("haarcascade_frontalface_default.xml")
-f_list = []
 
 while True:
     ret, frame = cap.read()
@@ -65,13 +68,12 @@ while True:
         im_face = cv2.resize(im_face, (100, 100))
         X_test.append(im_face.reshape(-1))
 
-    if len(faces) > 0:
+    if len(X_test) > 0:  # Verifica se pelo menos um rosto foi detectado
         response = model.predict(np.vstack(X_test))
-
-    for i, face in enumerate(faces):
-        x, y, w, h = face
-        cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 0, 0), 3)
-        cv2.putText(frame, str(response[i]), (x - 50, y - 50), cv2.FONT_HERSHEY_DUPLEX, 2, (0, 255, 0), 3)
+        for i, face in enumerate(faces):
+            x, y, w, h = face
+            cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 0, 0), 3)
+            cv2.putText(frame, str(response[i]), (x - 50, y - 50), cv2.FONT_HERSHEY_DUPLEX, 2, (0, 255, 0), 3)
 
     cv2.imshow("full", frame)
     key = cv2.waitKey(1)
