@@ -1,4 +1,4 @@
-# Rusty Pendulum
+# Face Detect
 
 An application to recogonize faces with KNN, pandas and numpy.
 
